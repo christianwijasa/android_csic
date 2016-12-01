@@ -37,14 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        AccountContract.AccountDbHelper accountDbHelper
-                = new AccountContract.AccountDbHelper(this);
-
-        SQLiteDatabase db = accountDbHelper.getReadableDatabase();
-
-//        String[] projection = {
-//                AccountContract.AccountEntry.
-//        }
         first_name  = (EditText) findViewById(R.id.edit_nama_depan);
         last_name   = (EditText) findViewById(R.id.edit_nama_belakang);
         nip         = (EditText) findViewById(R.id.edit_nip);
