@@ -26,31 +26,27 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-    //progress dialog
+    // progress dialog
 
     private ProgressDialog progressDialog;
     String email, password;
 
-    //creating JSON Parser object
+    // creating JSON Parser object
     JSONParser jParser = new JSONParser();
     ArrayList<HashMap<String,String>> member_map;
 
     private static String url_member = "http://192.168.1.2/"+
             "/android/lucid/member.php";
 
-    //JSON node names
+    // JSON node names
 
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MEMBER= "member";       //TAG_MEMBER harus sama dengan array response pada member.php
+    private static final String TAG_MEMBER= "member"; // TAG_MEMBER harus sama dengan array response pada member.php
     private static final String TAG_MEMBER_ID = "member_id";
     private static final String TAG_EMAIL = "email";
     private static final String TAG_FIRST_NAME = "first_name";
     private static final String TAG_LAST_NAME = "last_name";
     private static final String TAG_NIP = "nip";
-
-
-
-
 
     JSONArray members_data = null;
 
@@ -68,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(String... params) {
-
             List<Pair<String,String>> args = new ArrayList<Pair<String,String>>();
             args.add(new Pair<>("email",email));
             args.add(new Pair<>("password",password));
@@ -106,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra(TAG_MEMBER_ID,member_id);
 
                     //save member data to database SQLLite
-                    AccountContract.AccountDbHelper accountDbHelper
+                    /*AccountContract.AccountDbHelper accountDbHelper
                             = new AccountContract.AccountDbHelper(LoginActivity.this);
                     SQLiteDatabase db = accountDbHelper.getWritableDatabase();
 
@@ -135,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                       AccountContract.AccountEntry.TABLE_NAME,
                             null,
                             values
-                    );
+                    );*/
 
                     startActivity(intent);
                     finish();
@@ -148,8 +143,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             return null;
         }
-
-
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
@@ -164,7 +157,6 @@ public class LoginActivity extends AppCompatActivity {
         if(progressDialog!=null){
             progressDialog.dismiss();
         }
-
     }
 
     @Override
@@ -172,26 +164,34 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy
                 .Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        StrictMode.setThreadPolicy(policy);*/
 
         Button btnLogin = (Button) findViewById(R.id.login_button);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //get the input
+                // get the input
                 EditText editEmail = (EditText) findViewById(R.id.edit_email);
                 EditText editPassword = (EditText) findViewById(R.id.edit_password);
 
                 email = editEmail.getText().toString();
                 password = editPassword.getText().toString();
 
-                new CheckLogin().execute();
-
-
+                //new CheckLogin().execute();
+                try {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                catch (Exception e) {
+                    Toast.makeText(
+                            getBaseContext(),
+                            "Error: " + e.toString(),
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
             }
         });
     }
