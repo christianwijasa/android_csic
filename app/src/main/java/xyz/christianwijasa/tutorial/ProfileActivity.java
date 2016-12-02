@@ -39,13 +39,16 @@ public class ProfileActivity extends AppCompatActivity {
     private static String url_member_details = "http://192.168.1.3/"+
             "/android/lucid/view_member_details.php";
 
-    private static String url_edit_member = "http://192.168.1.2/"+
+    private static String url_edit_member = "http://192.168.1.3/"+
             "/android/lucid/edit_member.php";
 
-    ArrayList<HashMap<String,String>> memberData;
-
     EditText text_first_name, text_last_name, text_nip;
-    String member_id,first_name,last_name, nip;
+
+    //variable untuk mengambil i.getExtra("member_id");
+    String member_id;
+
+    //variable untuk edit data
+    String edit_first_name, edit_last_name, edit_nip;
 
     private static final String TAG_SUCCESS = "success";
 
@@ -83,11 +86,11 @@ public class ProfileActivity extends AppCompatActivity {
         btnUbah.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                first_name = text_first_name.getText().toString();
-                last_name  = text_last_name.getText().toString();
-                nip = text_nip.getText().toString();
+                edit_first_name = text_first_name.getText().toString();
+                edit_last_name  = text_last_name.getText().toString();
+                edit_nip = text_nip.getText().toString();
 
-//                new SaveMemberDetails().execute();
+              new SaveMemberDetails().execute();
             }
         });
 
@@ -109,6 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    //AsyncTask untuk mengambil data member untuk ditampilkan dalam PROFILE
     class GetMemberDetails extends AsyncTask<String, String, String>{
         @Override
         protected void onPreExecute() {
@@ -180,39 +184,69 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-//    class SaveMemberDetails extends AsyncTask<String, String, String>{
-//        //before starting background thread, show progress dialog
-//
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            progressDialog = new ProgressDialog(ProfileActivity.this);
-//            progressDialog.setMessage("Saving member data. Please wait...");
-//            progressDialog.setIndeterminate(false);
-//            progressDialog.setCancelable(true);
-//            progressDialog.show();
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            List<Pair<String, String>> args =
-//                    new ArrayList<Pair<String,String>>();
-//
-//            args.add(new Pair<>(TAG_MEMBER_ID,member_id));
-//            args.add(new Pair<>(TAG_FIRST_NAME,first_name));
-//            args.add(new Pair<>(TAG_LAST_NAME,last_name));
-//            args.add(new Pair<>(TAG_NIP));
-//            JSONObject jsonObject = null;
-//
-//            try{
-//                //sending modified data through HTPP Request
-//
-//                jsonObject = jsonParser
-//                        .makeHttpRequest(url)
-//            }
-//        }
-//
+    //AsyncTask untuk mengubah data member pada menu PROFILE
+    class SaveMemberDetails extends AsyncTask<String, String, String>{
+        //before starting background thread, show progress dialog
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ProfileActivity.this);
+            progressDialog.setMessage("Saving member data. Please wait...");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            List<Pair<String, String>> args =
+                    new ArrayList<Pair<String,String>>();
+
+            args.add(new Pair<>(TAG_MEMBER_ID,member_id));
+            args.add(new Pair<>(TAG_FIRST_NAME,edit_first_name));
+            args.add(new Pair<>(TAG_LAST_NAME,edit_last_name));
+            args.add(new Pair<>(TAG_NIP,edit_nip));
+            JSONObject jsonObject = null;
+
+            try{
+                //sending modified data through HTPP Request
+
+                jsonObject = jsonParser
+                        .makeHttpRequest(url_edit_member,"POST",args);
+            }catch(IOException e){
+                Log.d("Networking", e.getLocalizedMessage());
+            }
+
+            //check JSON success tag
+
+            try{
+                int success = jsonObject.getInt(TAG_SUCCESS);
+
+                if(success == 1){
+                    //sucessfully updated
+                    Intent i = getIntent();
+                    //send result code 100 to notify about product update
+
+                    setResult(100,i);
+                    finish();
+                }else{
+                    //failed to update product
+                }
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //dismiss the dialog once done
+            progressDialog.dismiss();
+        }
+    }
+
 
 
 }
