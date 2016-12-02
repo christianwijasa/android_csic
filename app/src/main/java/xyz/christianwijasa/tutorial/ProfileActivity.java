@@ -83,6 +83,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         new GetMemberDetails().execute();
 
+
+
         btnUbah.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -99,7 +101,9 @@ public class ProfileActivity extends AppCompatActivity {
         ubah_kata_sandi.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this,ChangePasswordActivity.class));
+                Intent intent = new Intent(ProfileActivity.this,ChangePasswordActivity.class);
+                intent.putExtra(TAG_MEMBER_ID,member_id);
+                startActivity(intent);
             }
         });
     }
@@ -156,6 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
                             JSONObject member = memberObj.getJSONObject(0);
 
                             //EditText
+                            //get the input for update data
                             text_first_name  = (EditText) findViewById(R.id.edit_nama_depan);
                             text_last_name   = (EditText) findViewById(R.id.edit_nama_belakang);
                             text_nip         = (EditText) findViewById(R.id.edit_nip);
@@ -231,7 +236,7 @@ public class ProfileActivity extends AppCompatActivity {
                     setResult(100,i);
                     finish();
                 }else{
-                    //failed to update product
+                    //failed to update member data
                 }
             }catch(JSONException e){
                 e.printStackTrace();
