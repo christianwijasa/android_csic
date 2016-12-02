@@ -36,9 +36,9 @@ public class JSONParser {
 
     }
 
-    public JSONObject makeHttpRequest(String url, String method,
+    public JSONObject makeHttpRequest(String a, String method,
                                       List<Pair<String, String>> params) throws IOException {
-        URL urls = new URL(url);
+        URL urls = new URL(a);
         URLConnection connection = urls.openConnection();
         if (!(connection instanceof HttpURLConnection))
             throw new IOException("Not an HTTP Connection");

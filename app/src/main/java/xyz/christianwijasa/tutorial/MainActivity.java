@@ -13,9 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    String member_id = "";
+    //TAG untuk kolom passing ke activity lain
+    private static final String MEMBER_ID = "member_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +49,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -82,8 +91,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-            // Handle the camera action
+            member_id = getIntent().getStringExtra("member_id");
+//            Toast.makeText(MainActivity.this,member_id,Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
+            intent.putExtra(MEMBER_ID,member_id);
+            startActivity(intent);
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

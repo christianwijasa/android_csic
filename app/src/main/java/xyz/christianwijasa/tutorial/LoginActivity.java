@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Handler;
 
 public class LoginActivity extends AppCompatActivity {
     // progress dialog
@@ -33,20 +35,19 @@ public class LoginActivity extends AppCompatActivity {
 
     // creating JSON Parser object
     JSONParser jParser = new JSONParser();
-    ArrayList<HashMap<String,String>> member_map;
 
-    private static String url_member = "http://192.168.1.2/"+
+    private static String url_member = "http://192.168.1.3/"+
             "/android/lucid/member.php";
 
-    // JSON node names
+    //TAG untuk passing ke intent lain
+    private static final String MEMBER_ID = "member_id";
 
+    //TAG untuk mengambil JSONArray of Object. sesuaikan dengan variable pada file member.php
+    private static final String TAG_ARRAY ="member";
+
+    //TAG untuk mengambil kolom json
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MEMBER= "member"; // TAG_MEMBER harus sama dengan array response pada member.php
     private static final String TAG_MEMBER_ID = "member_id";
-    private static final String TAG_EMAIL = "email";
-    private static final String TAG_FIRST_NAME = "first_name";
-    private static final String TAG_LAST_NAME = "last_name";
-    private static final String TAG_NIP = "nip";
 
     JSONArray members_data = null;
 
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(String... params) {
+            //building parameter
             List<Pair<String,String>> args = new ArrayList<Pair<String,String>>();
             args.add(new Pair<>("email",email));
             args.add(new Pair<>("password",password));
@@ -77,61 +79,24 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("Networking",e.getLocalizedMessage());
             }
 
-            Log.d("Create response", jsonObject.toString());
             //check for success tag
 
             try{
+
+                Log.d("Create response", jsonObject.toString());
+
                 int success = jsonObject.getInt(TAG_SUCCESS);
 
                 if(success == 1){
                     //successfully get the member
-
-                    members_data = jsonObject.getJSONArray(TAG_MEMBER);
+                    members_data = jsonObject.getJSONArray(TAG_ARRAY);
 
                     //get the first data of member
                     JSONObject member = members_data.getJSONObject(0);
-                    String member_id = member.getString(TAG_MEMBER_ID);
-                    String email     = member.getString(TAG_EMAIL);
-                    String first_name= member.getString(TAG_FIRST_NAME);
-                    String last_name = member.getString(TAG_LAST_NAME);
-                    String nip       = member.getString(TAG_NIP);
-
+                    String member_id = member.getString("member_id");
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra(TAG_MEMBER_ID,member_id);
-
-                    //save member data to database SQLLite
-                    /*AccountContract.AccountDbHelper accountDbHelper
-                            = new AccountContract.AccountDbHelper(LoginActivity.this);
-                    SQLiteDatabase db = accountDbHelper.getWritableDatabase();
-
-                    ContentValues values = new ContentValues();
-                    values.put(
-                            AccountContract.AccountEntry.COLUMN_EMAIL,
-                            email
-                    );
-
-                    values.put(
-                            AccountContract.AccountEntry.COLUMN_FIRST_NAME,
-                            first_name
-                    );
-
-                    values.put(
-                            AccountContract.AccountEntry.COLUMN_LAST_NAME,
-                            last_name
-                    );
-
-                    values.put(
-                            AccountContract.AccountEntry.COLUMN_NIP,
-                            nip
-                    );
-
-                    long newRowId = db.insert(
-                      AccountContract.AccountEntry.TABLE_NAME,
-                            null,
-                            values
-                    );*/
-
+                    intent.putExtra(MEMBER_ID,member_id);
                     startActivity(intent);
                     finish();
                 }
@@ -159,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,10 +146,8 @@ public class LoginActivity extends AppCompatActivity {
                 email = editEmail.getText().toString();
                 password = editPassword.getText().toString();
 
-                //new CheckLogin().execute();
                 try {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    new CheckLogin().execute();
                 }
                 catch (Exception e) {
                     Toast.makeText(
