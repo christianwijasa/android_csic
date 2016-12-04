@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
