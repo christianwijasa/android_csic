@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="xyz.christianwijasa.tutorial">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -31,6 +31,14 @@
             android:name=".ChangePasswordActivity"
             android:label="@string/title_activity_change_password"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AssignmentActivity"
+            android:label="@string/title_activity_assignment"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ChapterQActivity"
+            android:label="@string/title_activity_chapter_q"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

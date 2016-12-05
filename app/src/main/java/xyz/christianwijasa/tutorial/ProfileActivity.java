@@ -36,10 +36,10 @@ public class ProfileActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     JSONParser jsonParser = new JSONParser();
 
-    private static String url_member_details = "http://192.168.1.3/"+
+    private static String url_member_details = "http://192.168.1.8/"+
             "/android/lucid/view_member_details.php";
 
-    private static String url_edit_member = "http://192.168.1.3/"+
+    private static String url_edit_member = "http://192.168.1.8/"+
             "/android/lucid/edit_member.php";
 
     EditText text_first_name, text_last_name, text_nip;
