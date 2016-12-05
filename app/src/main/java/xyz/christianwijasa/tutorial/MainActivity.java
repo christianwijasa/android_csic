@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             member_id = getIntent().getStringExtra("member_id");
-//            Toast.makeText(MainActivity.this,member_id,Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
             intent.putExtra(MEMBER_ID,member_id);
             startActivity(intent);

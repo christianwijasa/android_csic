@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     // creating JSON Parser object
     JSONParser jParser = new JSONParser();
 
-    private static String url_member = "http://192.168.1.8/"+
+    private static String url_member = "http://192.168.1.4"+
             "/android/lucid/member.php";
 
     //TAG untuk passing ke intent lain
