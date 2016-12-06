@@ -40,7 +40,7 @@ public class AssignmentActivity extends AppCompatActivity {
     JSONParser jParser = new JSONParser();
     ArrayList<HashMap<String, String>> questionList;
 
-    private static String url_all_questions = "http://192.168.1.4/"+
+    private static String url_all_questions = "http://192.168.1.3/"+
             "android/lucid/get_all_questions.php";
 
     public String materi_id;// untuk mengambil getPutExtra("materi_id"); pada onCreate
@@ -151,7 +151,7 @@ public class AssignmentActivity extends AppCompatActivity {
                             AssignmentActivity.this,
                             questionList,
                             R.layout.list_item,
-                            new String[]{TAG_QUESTION_ID, TAG_QUESTION, TAG_ANSWER_1, TAG_ANSWER_2, TAG_ANSWER_3},
+                            new String[]{TAG_QUESTION_ID, TAG_QUESTION, TAG_ANSWER_1, TAG_ANSWER_2, TAG_ANSWER_3,},
                             new int[]{R.id.pid, R.id.soal,R.id.jawaban_1, R.id.jawaban_2, R.id.jawaban_3});
 
                     assignmentListView.setAdapter(adapter);
