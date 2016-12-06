@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="xyz.christianwijasa.tutorial.MateriActivity">
+
+    <VideoView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/buttonPlay"
+        android:text="Play"
+        android:layout_below="@+id/video"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/buttonPause"
+        android:text="Pause"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/video"
+        android:layout_toEndOf="@+id/buttonPlay" />
+
+    <Button
+        android:id="@+id/buttonStop"
+        android:text="Stop"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonPause"
+        android:layout_alignBottom="@+id/buttonPause"
+        android:layout_toEndOf="@+id/buttonPause" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Materi"
+        android:textSize="30dp"
+        android:layout_below="@+id/buttonPlay"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/textMateri" />
+
+    <TextView
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/textView"
+        android:layout_below="@+id/textMateri"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border"
+        android:padding="10dp"/>
+
+</RelativeLayout>
+

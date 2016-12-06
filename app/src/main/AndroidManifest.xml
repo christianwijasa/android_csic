@@ -38,6 +38,10 @@
         <activity
             android:name=".ChapterQActivity"
             android:label="@string/title_activity_chapter_q"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MateriActivity"
+            android:label="@string/title_activity_materi"
             android:theme="@style/AppTheme"></activity>
     </application>
 

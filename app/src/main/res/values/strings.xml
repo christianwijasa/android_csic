@@ -99,4 +99,7 @@
     </string>
     <string name="title_activity_assignment">AssignmentActivity</string>
     <string name="title_activity_chapter_q">ChapterQActivity</string>
+    <string name="quiz_button_submit">Kumpulkan</string>
+    <string name="keluar">Keluar</string>
+    <string name="title_activity_materi">MateriActivity</string>
 </resources>

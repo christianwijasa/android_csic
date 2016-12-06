@@ -58,7 +58,9 @@ public class AssignmentActivity extends AppCompatActivity {
     private static final String TAG_ANSWER_3 = "jawaban_3";
     private static final String TAG_REAL_ANSWER = "jawaban_benar";
 
-
+    //global variable for checking answer
+    ListView simpleList;
+    Integer jumlah_soal ;
 
     JSONArray questions = null;
 
@@ -100,7 +102,7 @@ public class AssignmentActivity extends AppCompatActivity {
                 if(success == 1){
 
                     questions = jsonObject.getJSONArray(TAG_ARRAY);
-
+                    jumlah_soal = questions.length();
                     for(int i = 0;i< questions.length(); i++){
                         JSONObject c = questions.getJSONObject(i);
                         String id = c.getString(TAG_QUESTION_ID);
@@ -177,15 +179,38 @@ public class AssignmentActivity extends AppCompatActivity {
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
-
-
-        //getting member details from intent
+        //getting materi_id from intent
         Intent i = getIntent();
         materi_id = i.getStringExtra(TAG_MATERI);
 
         //hasmap for listview
         questionList = new ArrayList<HashMap<String, String>>();
         new LoadAllQuestions().execute();
+
+        Button submitBtn = (Button) findViewById(R.id.quiz_button_submit);
+        Button cancelBtn = (Button) findViewById(R.id.quiz_button_cancel);
+
+
+        simpleList = (ListView) findViewById(R.id.assignment_list);
+
+        Toast.makeText(AssignmentActivity.this,jumlah_soal,Toast.LENGTH_SHORT).show();
+    //        QuestionAdapter customAdapter = new QuestionAdapter(getApplicationContext(), jumlah_soal);
+    //        simpleList.setAdapter(customAdapter);
+
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message ="";
+                for(int i = 0;i< QuestionAdapter.selectedAnswers.size();i++){
+                    message = message + "\n" + (i+1) + " " + QuestionAdapter.selectedAnswers.get(i);
+
+                }
+
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+            }
+        });
 
     }
 
